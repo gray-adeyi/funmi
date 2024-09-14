@@ -38,6 +38,7 @@
             tabindex="0"
             on:click={toggleMenu}
             on:keydown={toggleMenu}
+            title="Menu"
         >
             <md-icon>menu</md-icon>
         </md-icon-button>
