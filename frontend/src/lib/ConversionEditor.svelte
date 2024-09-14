@@ -6,7 +6,7 @@
     import "@material/web/icon/icon.js";
     import { CSSColorFormat } from "@/colorUtils";
     import { handleButtonEvents } from "@/events";
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import type { NotificationEventPayload } from "@/types/events";
 
     let sourceFormat: CSSColorFormat = CSSColorFormat.RGBA;
@@ -39,6 +39,10 @@
     $: parsedSourceColor = sourceColor;
 
     $: dispatcher("updateSourceColor", parsedSourceColor);
+
+    onMount(() => {
+        dispatcher("updateSourceColor", parsedSourceColor);
+    });
 
     function handleSourceInput(event: InputEvent) {
         sourceColor = (event.target as HTMLInputElement).value;
@@ -90,7 +94,7 @@
         tabindex="0"
         on:click={copyFromClipboard}
         on:keydown={copyFromClipboard}
-        title="paste from clipboard"
+        title="Paste from clipboard"
     >
         <md-icon>content_paste</md-icon>
     </md-icon-button>
@@ -113,14 +117,14 @@
         --size: 4rem;
         width: var(--size);
         height: var(--size);
-        border-radius: 1rem;
+        border-radius: 4px;
         padding: 0.2rem;
-        border: 2px solid var(--surface-bg);
+        border: 1px solid var(--md-sys-color-outline);
     }
 
     .editor__preview-box {
         width: 100%;
         height: 100%;
-        border-radius: 1rem;
+        border-radius: 4px;
     }
 </style>
