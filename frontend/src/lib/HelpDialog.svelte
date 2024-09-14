@@ -1,36 +1,40 @@
 <script lang="ts">
-    import "@material/web/dialog/dialog.js";
-    import { MdDialog } from "@material/web/dialog/dialog";
-    import "@material/web/button/text-button.js";
-
-    import { createEventDispatcher } from "svelte";
-    import { handleButtonEvents } from "@/events";
+    import BaseDialog from "./BaseDialog.svelte";
 
     export let open: boolean;
-
-    const dispatcher = createEventDispatcher<{ close: null }>();
-
-    const close = handleButtonEvents(() => dispatcher("close"));
-
-    let modalEl: MdDialog | null;
 </script>
 
-<md-dialog class="dialog" on:closed={close} {open} bind:this={modalEl}>
-    <div slot="headline">Help</div>
-    <div slot="content">A simple dialog with free-form content.</div>
-    <div slot="actions">
-        <md-text-button
-            role="button"
-            tabindex="0"
-            on:click={() => modalEl?.close()}
-            on:keydown={close}>Close</md-text-button
-        >
+<BaseDialog {open} title="Help" on:close>
+    <div slot="content" class="dialog__content">
+        <p>
+            Funmi - CSS Color Conversion App is a utility app that let's you
+            convert between your provided source format to other supported css
+            fromats.
+        </p>
+        <p>
+            Paste the color you wish to convert into the <b>Source Color</b>
+            input and make sure that the <b>select source format</b> option to
+            the left of the <b>Source Color</b> input matches the provided source
+            color. Viola! You get your results in different formats.
+        </p>
+        <p>
+            Click on the copy icon of the generated results to copy the color to
+            your clipboard. The app also supports pasting the <b>Source Color</b
+            > from your clipboard
+        </p>
+        <p>Happy Coding 😎</p>
     </div>
-</md-dialog>
+</BaseDialog>
 
 <style>
-    .dialog {
-        margin-block-start: 25%;
-        margin-inline-start: 25%;
+    .dialog__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        font-size: var(--md-sys-typescale-body-large-size);
     }
 </style>
