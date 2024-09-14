@@ -2,11 +2,13 @@
     import ConversionEditor from "@/lib/ConversionEditor.svelte";
     import ConversionPreview from "@/lib/ConversionPreview.svelte";
 
-    let sourceRgba = "";
+
+
+    let sourceColor = "rgba(255,255,0,1)";
 
     function handleUpdateSourceColor(event: CustomEvent<string>) {
         console.log("i am getting called");
-        sourceRgba = event.detail;
+        sourceColor = event.detail;
     }
 </script>
 
@@ -15,7 +17,7 @@
         on:updateSourceColor={handleUpdateSourceColor}
         on:showNotification
     />
-    <ConversionPreview {sourceRgba} on:showNotification />
+    <ConversionPreview {sourceColor} on:showNotification />
 </div>
 
 <style>
