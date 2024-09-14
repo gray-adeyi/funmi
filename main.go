@@ -20,6 +20,7 @@ func main() {
 		Title:  "Funmi - CSS Color Conversion App",
 		Width:  512,
 		Height: 384,
+		DisableResize: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
