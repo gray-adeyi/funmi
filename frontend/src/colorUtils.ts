@@ -215,9 +215,15 @@ export function rgbaToHsla(rgbaValue: string): string | null {
         }
     }
 
-    return `hsla(${hue.toFixed(1)}, ${saturation * 100}%, ${
-        lightness * 100
+    return `hsla(${hue.toFixed(1)}, ${(saturation * 100).toFixed(2)}%, ${
+        (lightness * 100).toFixed(2)
     }%, ${alpha})`;
+}
+
+export function rgbaToRgba(rgbaValue: string): string | null {
+const validRgba = RGB_OR_RGBA_REGEX.exec(rgbaValue);
+    if (!validRgba) return null;
+    return rgbaValue
 }
 
 export function rgbaToHwb(rgbaValue: string): string | null {
@@ -258,7 +264,7 @@ export function rgbaToHwb(rgbaValue: string): string | null {
     // calculate whiteness and blackness to percentages
     const whiteness = w * 100;
     const blackness = bValue * 100;
-    return `hwb(${hue.toFixed(1)} ${whiteness}% ${blackness}% / ${alpha})`;
+    return `hwb(${hue.toFixed(1)} ${whiteness.toFixed(2)}% ${blackness.toFixed(2)}% / ${alpha})`;
 }
 
 export function rgbaToLab(rgbaValue: string): string | null {
