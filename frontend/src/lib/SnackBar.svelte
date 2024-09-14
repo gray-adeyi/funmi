@@ -66,19 +66,14 @@
         gap: 1rem;
         align-items: center;
         padding: 0.5rem;
-        background: #121212;
+        background: var(--md-sys-color-inverse-surface);
         max-width: 70vw;
-        border-radius: 8px;
+        border-radius: 4px;
     }
 
     .snack-bar__message {
-        color: var(--primary-bg);
+        color: var(--md-sys-color-inverse-on-surface);
         font-size: 1.3rem;
     }
 
-    @media screen and (prefers-color-scheme: dark) {
-        .snack-bar {
-            background: #fff;
-        }
-    }
 </style>
