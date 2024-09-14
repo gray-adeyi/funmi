@@ -4,14 +4,14 @@
     import "@material/web/textfield/outlined-text-field.js";
     import "@material/web/button/filled-tonal-button.js";
     import "@material/web/icon/icon.js";
-    import { CSSColorFormat } from "@/colorUtils";
+    import { colorFunctionToRgba, colorNameToRgba, CSSColorFormat, grayToRgba, hexadecimalToRgba, hslaToRgba, hwbToRgba, labToRgba, okLabToRgba, rgbaToRgba } from "@/colorUtils";
     import { handleButtonEvents } from "@/events";
     import { createEventDispatcher, onMount } from "svelte";
     import type { NotificationEventPayload } from "@/types/events";
 
     let sourceFormat: CSSColorFormat = CSSColorFormat.RGBA;
 
-    let sourceColor = "rgba(200,200,100)";
+    let sourceColor = "rgba(255,255,0,1)";
 
     const dispatcher = createEventDispatcher<{
         showNotification: NotificationEventPayload;
@@ -32,11 +32,33 @@
             displayName: "Named Colors",
             value: CSSColorFormat.COLOR_NAME_KEYWORDS,
         },
-        { displayName: "Gray", value: CSSColorFormat.GRAY },
+        // { displayName: "Gray", value: CSSColorFormat.GRAY },
         { displayName: "Color Function", value: CSSColorFormat.COLOR_FUNCTION },
     ];
 
-    $: parsedSourceColor = sourceColor;
+
+    const sourceColorToRgbaHandlerMapping: Record<
+        CSSColorFormat,
+        (value: string) => string | null
+    > = {
+        [CSSColorFormat.HEXADECIMAL]: hexadecimalToRgba,
+        [CSSColorFormat.RGBA]: rgbaToRgba,
+        [CSSColorFormat.HSLA]: hslaToRgba,
+        [CSSColorFormat.HWB]: hwbToRgba,
+        [CSSColorFormat.LAB]: labToRgba,
+        [CSSColorFormat.OK_LAB]: okLabToRgba,
+        [CSSColorFormat.COLOR_NAME_KEYWORDS]: colorNameToRgba,
+        [CSSColorFormat.GRAY]: grayToRgba,
+        [CSSColorFormat.COLOR_FUNCTION]: colorFunctionToRgba,
+    };
+
+    $: {
+        console.log('jiggy source format', sourceFormat, 'source color', sourceColor)
+        const result = sourceColorToRgbaHandlerMapping[sourceFormat](sourceColor)
+        console.log('result is ', result)
+    }
+
+    $: parsedSourceColor = sourceColorToRgbaHandlerMapping[sourceFormat](sourceColor) || 'null';
 
     $: dispatcher("updateSourceColor", parsedSourceColor);
 

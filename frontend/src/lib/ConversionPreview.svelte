@@ -12,14 +12,10 @@
         rgbaToRgba,
     } from "@/colorUtils";
     import PreviewItem from "@/lib/PreviewItem.svelte";
-    import { onMount } from "svelte";
     import imgSrc from "@/assets/images/error.png";
 
-    export let sourceRgba: string;
+    export let sourceColor: string;
 
-    const templatePreviewHandler = (rgbaValue: string) => {
-        return "#ff67fb";
-    };
 
     const previewHandlerMapping: Record<
         CSSColorFormat,
@@ -36,14 +32,11 @@
         [CSSColorFormat.COLOR_FUNCTION]: rgbaToColorFunction,
     };
 
-    onMount(() => {
-        console.log("i was mounted!");
-        return () => console.log("i was unmounted");
-    });
 
     function getPreviewColor(format: CSSColorFormat) {
-        console.log(`format is ${format}`);
-        return previewHandlerMapping[format](sourceRgba);
+        const result = previewHandlerMapping[format](sourceColor);
+        console.log(`for ${format} rsult is ${result}`)
+        return result
     }
 
     $: colors = ((value) => {
@@ -53,7 +46,7 @@
                 format: f,
                 value: getPreviewColor(f as CSSColorFormat),
             }));
-    })(sourceRgba);
+    })(sourceColor);
 
     $: hasValidColors = colors.filter((c) => c.value).length >= 1;
 </script>
