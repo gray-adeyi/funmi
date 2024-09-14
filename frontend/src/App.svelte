@@ -37,7 +37,11 @@
     />
   {/if}
   {#if isAboutDialogVisible}
-    <AboutDialog />
+    <AboutDialog
+      open={isAboutDialogVisible}
+      on:close={() => (isAboutDialogVisible = false)}
+      on:showNotification={handleShowNotification}
+    />
   {/if}
   {#if isNotificationVisible}
     <SnackBar
