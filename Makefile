@@ -8,5 +8,5 @@ build-macos:
 	GOOS=darwin GOARCH=amd64 wails build
 build-windows:
 	echo "building for windows..."
-	GOOS=windows GOARCH=amd64 wails build
+	wails build -nsis
 

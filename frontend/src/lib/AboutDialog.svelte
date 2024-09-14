@@ -18,7 +18,7 @@
             <FunmiLogo />
         </div>
         <span>CSS Color Conversion App</span>
-        <span>Version: 0.1.0</span>
+        <span>Version: 0.1.0-alpha+build1</span>
         <span
             >Source Code: <ExternalLink
                 link={sourceCodeLink}
