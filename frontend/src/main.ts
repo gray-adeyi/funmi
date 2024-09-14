@@ -1,3 +1,4 @@
+import '@fontsource/material-symbols-outlined';
 import './style.css'
 import App from './App.svelte'
 
