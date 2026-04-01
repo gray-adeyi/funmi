@@ -2,19 +2,19 @@
   import "@material/web/iconbutton/icon-button.js";
   import "@material/web/icon/icon.js";
   import { handleButtonEvents } from "@/events";
-  import { createEventDispatcher } from "svelte";
   import { type NotificationEventPayload } from "@/types/events";
 
-  const dispatcher = createEventDispatcher<{
-    showNotification: NotificationEventPayload;
-  }>();
+  interface Props {
+    color: string | null;
+    onShowNotification: (payload: NotificationEventPayload) => void;
+  }
 
-  export let color: string | null;
+  const { color, onShowNotification }: Props = $props();
 
   const copyToClipboard = handleButtonEvents(async () => {
     try {
-      await navigator.clipboard.writeText(color);
-      dispatcher("showNotification", {
+      await navigator.clipboard.writeText(color || "");
+      onShowNotification({
         message: `Copied ${color} to clipboard`,
         action: null,
       });
@@ -29,8 +29,8 @@
   <md-icon-button
     role="button"
     tabindex="0"
-    on:click={copyToClipboard}
-    on:keydown={copyToClipboard}
+    onclick={copyToClipboard}
+    onkeydown={copyToClipboard}
     title="Copy color to clipboard"
   >
     <md-icon>content_copy</md-icon>

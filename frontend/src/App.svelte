@@ -1,52 +1,50 @@
 <script lang="ts">
-  import AppBar from "@/lib/AppBar.svelte";
-  import AppMain from "@/lib/AppMain.svelte";
-  import HelpDialog from "./lib/HelpDialog.svelte";
-  import AboutDialog from "./lib/AboutDialog.svelte";
-  import SnackBar from "./lib/SnackBar.svelte";
-  import type { NotificationEventPayload } from "./types/events";
+  import AppBar from "@/lib/components/AppBar.svelte";
+  import AppMain from "@/lib/components/AppMain.svelte";
+  import HelpDialog from "@/lib/components/HelpDialog.svelte";
+  import AboutDialog from "@/lib/components/AboutDialog.svelte";
+  import SnackBar from "@/lib/components/SnackBar.svelte";
+  import type { NotificationEventPayload } from "@/types/events";
 
-  let isHelpDialogVisible = false;
-  let isAboutDialogVisible = false;
-  let isNotificationVisible = false;
+  let isHelpDialogVisible = $state(false);
+  let isAboutDialogVisible = $state(false);
+  let isNotificationVisible = $state(false);
 
-  let notificationPayload: NotificationEventPayload = {
+  let notificationPayload: NotificationEventPayload = $state({
     message: "",
     action: null,
-  };
+  });
 
-  function handleShowNotification(
-    event: CustomEvent<NotificationEventPayload>,
-  ) {
+  function handleShowNotification(payload: NotificationEventPayload) {
     isNotificationVisible = true;
-    notificationPayload = event.detail;
+    notificationPayload = payload;
   }
 </script>
 
 <main class="app">
   <AppBar
-    on:showHelpDialog={() => (isHelpDialogVisible = true)}
-    on:showAboutDialog={() => (isAboutDialogVisible = true)}
+    onShowHelpDialog={() => (isHelpDialogVisible = true)}
+    onShowAboutDialog={() => (isAboutDialogVisible = true)}
   />
-  <AppMain on:showNotification={handleShowNotification} />
+  <AppMain onShowNotification={handleShowNotification} />
 
   {#if isHelpDialogVisible}
     <HelpDialog
       open={isHelpDialogVisible}
-      on:close={() => (isHelpDialogVisible = false)}
+      onClose={() => (isHelpDialogVisible = false)}
     />
   {/if}
   {#if isAboutDialogVisible}
     <AboutDialog
       open={isAboutDialogVisible}
-      on:close={() => (isAboutDialogVisible = false)}
-      on:showNotification={handleShowNotification}
+      onClose={() => (isAboutDialogVisible = false)}
+      onShowNotification={handleShowNotification}
     />
   {/if}
   {#if isNotificationVisible}
     <SnackBar
       {...notificationPayload}
-      on:close={() => (isNotificationVisible = false)}
+      onClose={() => (isNotificationVisible = false)}
     />
   {/if}
 </main>

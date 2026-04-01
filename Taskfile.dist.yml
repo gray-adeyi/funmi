@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  default:
+    desc: Runs the default task
+    cmds:
+      - task: run
+  run:
+    desc: Runs the project in dev mode
+    cmds:
+      - wails dev
+  build:
+    desc: Builds the project binary for different operating system targets
+    cmds:
+      - task: build-linux
+      - task: build-windows
+      - task: build-macos
+  build-linux:
+    desc: Biilds the project binary for the linux operating system
+    cmds:
+      - GOOS=linux GOARCH=amd64 wails build
+  build-windows:
+    desc: Biilds the project binary for the linux operating system
+    cmds:
+      - GOOS=windows GOARCH=amd64 wails build -nsis
+  build-macos:
+    desc: Biilds the project binary for the linux operating system
+    cmds:
+      - GOOS=darwin GOARCH=amd64 wails build

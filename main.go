@@ -17,16 +17,16 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "Funmi - CSS Color Conversion App",
-		Width:  512,
-		Height: 384,
+		Title:         "Funmi - CSS Color Conversion App",
+		Width:         512,
+		Height:        384,
 		DisableResize: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
-		Bind: []interface{}{
+		Bind: []any{
 			app,
 		},
 	})
